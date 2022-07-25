@@ -35,7 +35,8 @@ export type ManifestEntryType =
   | 'HudTopBar'
   | 'FlyoutScoreboard'
   | 'GameInfo'
-  | 'EndScreen';
+  | 'EndScreen'
+  | 'PregameStrategy';
 
 const getErrorName = (manifestName?: string) =>
   `PanoramaManifestPlugin${manifestName !== undefined ? ` (${manifestName})` : ''}`;
