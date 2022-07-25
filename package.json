@@ -1,5 +1,5 @@
 {
-  "name": "webpack-panorama",
+  "name": "@cabin-icarus/webpack-panorama",
   "version": "0.2.1",
   "description": "Utilities for using webpack with Valve's Panorama UI (for Dota 2 Custom Games).",
   "keywords": [
