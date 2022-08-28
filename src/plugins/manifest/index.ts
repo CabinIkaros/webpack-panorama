@@ -52,6 +52,7 @@ export class PanoramaManifestPlugin {
       inject: false,
       template: manifestTemplatePath,
       xhtml: true,
+      minify: false,
       ...options,
     });
   }
