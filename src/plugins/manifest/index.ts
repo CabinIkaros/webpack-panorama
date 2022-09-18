@@ -7,6 +7,7 @@ import webpack from 'webpack';
 import ModuleDependency from 'webpack/lib/dependencies/ModuleDependency';
 import { makePathsRelative } from 'webpack/lib/util/identifier';
 import {
+  DotaXmlEntry,
   ManifestEntry,
   ManifestEntryType,
   PanoramaManifestError,
@@ -31,6 +32,7 @@ interface XmlAsset {
 
 export interface PanoramaManifestPluginOptions extends HtmlWebpackPlugin.Options {
   entries: string | ManifestEntry[];
+  dotaXmlList:DotaXmlEntry[]
 
   /**
    * @default '[path][name].[ext]'
@@ -42,10 +44,12 @@ const addEntry = promisify(webpack.Compilation.prototype.addEntry);
 
 export class PanoramaManifestPlugin {
   private readonly entries: string | ManifestEntry[];
+  private readonly xmlList: DotaXmlEntry[];
   private readonly entryFilename: string;
   private readonly htmlWebpackPlugin: HtmlWebpackPlugin;
-  constructor({ entries, entryFilename, ...options }: PanoramaManifestPluginOptions) {
+  constructor({ entries,xmlList, entryFilename, ...options }: PanoramaManifestPluginOptions) {
     this.entries = entries;
+    this.xmlList = xmlList;
     this.entryFilename = entryFilename ?? '[path][name].[ext]';
     this.htmlWebpackPlugin = new HtmlWebpackPlugin({
       filename: 'custom_ui_manifest.xml',
@@ -153,10 +157,17 @@ export class PanoramaManifestPlugin {
           for (const chunk of compilation.chunkGraph.getModuleChunksIterable(module)) {
             for (const file of chunk.files) {
               if (file.endsWith('.xml')) {
-                xmlAssets.push({ file: args.assets.publicPath + file, type });
+                  xmlAssets.push({ file: args.assets.publicPath + file, type });
               }
             }
           }
+        }
+
+        for (let xml of this.xmlList)
+        {
+          if (xml.path.endsWith('.xml'))
+            if (xml.path.startsWith("file://"))
+              xmlAssets.push({file: xml.path, type:xml.type});
         }
 
         xmlAssets.sort((a, b) => {

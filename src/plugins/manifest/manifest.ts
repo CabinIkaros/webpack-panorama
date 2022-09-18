@@ -28,6 +28,12 @@ export interface ManifestEntry {
   type?: ManifestEntryType | null;
 }
 
+export interface DotaXmlEntry
+{
+  path:string,
+  type:ManifestEntryType;
+}
+
 export type ManifestEntryType =
   | 'GameSetup'
   | 'HeroSelection'
@@ -35,7 +41,8 @@ export type ManifestEntryType =
   | 'HudTopBar'
   | 'FlyoutScoreboard'
   | 'GameInfo'
-  | 'EndScreen';
+  | 'EndScreen'
+  | 'PregameStrategy';
 
 const getErrorName = (manifestName?: string) =>
   `PanoramaManifestPlugin${manifestName !== undefined ? ` (${manifestName})` : ''}`;
