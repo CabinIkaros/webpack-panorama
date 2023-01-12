@@ -1,6 +1,6 @@
 {
   "name": "@cabin-icarus/webpack-panorama",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "description": "Utilities for using webpack with Valve's Panorama UI (for Dota 2 Custom Games).",
   "keywords": [
     "dota",
@@ -53,15 +53,15 @@
     "@types/js-yaml": "^4.0.5",
     "@types/loader-utils": "^2.0.3",
     "@types/lodash": "^4.14.178",
-    "@types/node": "^18.7.15",
+    "@types/node": "^18.11.18",
     "eslint": "^8.5.0",
     "npm-run-all": "^4.1.5",
     "prettier": "^2.5.1",
-    "typescript": "^4.8.2",
-    "webpack": "^5.0.0-beta.30"
+    "typescript": "^4.9.4",
+    "webpack": "^5.75.0"
   },
   "peerDependencies": {
-    "webpack": "^5.0.0-beta.30"
+    "webpack": "^5.75.0"
   },
   "engines": {
     "node": ">=14.0.0"
