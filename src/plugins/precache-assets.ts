@@ -16,6 +16,7 @@ export class PrecachePanoramaAssetsPlugin {
     compiler.hooks.compilation.tap(this.constructor.name, (compilation) => {
       const publicPath = compilation.getPath(compilation.outputOptions.publicPath ?? '');
 
+      // @ts-ignore
       const htmlHooks = HtmlWebpackPlugin.getHooks(compilation);
 
       htmlHooks.beforeEmit.tap(this.constructor.name, (args) => {
