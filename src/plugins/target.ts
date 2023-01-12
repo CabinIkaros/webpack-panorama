@@ -18,7 +18,7 @@ export class PanoramaTargetPlugin {
 
     // TODO: Add .xml asset default rule?
 
-    options.output.globalObject ??= 'globalThis';
+    options.output.globalObject ??= "(() => this)()";
     options.output.enabledChunkLoadingTypes ??= [];
 
     if (options.optimization.splitChunks !== false) {
