@@ -43,7 +43,7 @@ const addEntry = promisify(webpack.Compilation.prototype.addEntry);
 
 export class PanoramaManifestPlugin {
   private readonly entries: string | ManifestEntry[];
-  private readonly xmlList: DotaXmlEntry[];
+  private readonly xmlList?: DotaXmlEntry[];
   private readonly entryFilename: string;
   private readonly htmlWebpackPlugin: HtmlWebpackPlugin;
   constructor({ entries,xmlList, entryFilename, ...options }: PanoramaManifestPluginOptions) {
@@ -164,11 +164,14 @@ export class PanoramaManifestPlugin {
           }
         }
 
-        for (let xml of this.xmlList)
+        if (this.xmlList)
         {
-          if (xml.path.endsWith('.xml'))
-            if (xml.path.startsWith("file://"))
-              xmlAssets.push({file: xml.path, type:xml.type});
+          for (let xml of this.xmlList)
+          {
+            if (xml.path.endsWith('.xml'))
+              if (xml.path.startsWith("file://"))
+                xmlAssets.push({file: xml.path, type: xml.type});
+          }
         }
 
         xmlAssets.sort((a, b) => {
