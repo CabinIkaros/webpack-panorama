@@ -46,8 +46,6 @@ export class PanoramaManifestPlugin {
   private readonly xmlList?: DotaXmlEntry[];
   private readonly entryFilename: string;
   private readonly htmlWebpackPlugin: HtmlWebpackPlugin;
-  private readonly kv: string[] | undefined;
-  private readonly kv_path: string = "file://{resources}/scripts/custom_game/kv/";
   private bManifestGenerated = false;
   constructor({ entries,xmlList, entryFilename, ...options }: PanoramaManifestPluginOptions) {
     this.entries = entries;
