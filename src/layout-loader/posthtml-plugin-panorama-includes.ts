@@ -11,6 +11,24 @@ const getRoot = (tree: posthtml.Api) => tree.find(createNodeFilter(['root']));
 const getIncludeRoots = (tree: posthtml.Api) =>
   (getRoot(tree)?.content ?? []).filter(createNodeFilter(['scripts', 'styles']));
 
+export const AddCommonStyles = (less_src: string[]) => {
+  return (tree: posthtml.Api) => {
+    return getRoot(tree)?.content.filter(createNodeFilter(['styles'])).forEach(node => {
+      const last_element = node.content.pop();
+      less_src.forEach((src) => node.content.push(`\n\t\t`, {
+        tag: "include",
+        attrs: {
+          src: src
+        },
+        content: []
+      }));
+      if (last_element) {
+        node.content.push(last_element);
+      }
+    });
+  };
+};
+
 export const preserveIncludesBefore: posthtml.Plugin = (tree: posthtml.Api) => {
   getIncludeRoots(tree)
     .flatMap((x) => x.content)
