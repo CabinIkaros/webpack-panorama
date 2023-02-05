@@ -47,9 +47,9 @@ export class PanoramaManifestPlugin {
   private readonly entryFilename: string;
   private readonly htmlWebpackPlugin: HtmlWebpackPlugin;
   private bManifestGenerated = false;
-  constructor({ entries,xmlList, entryFilename, ...options }: PanoramaManifestPluginOptions) {
+  constructor({ entries,dotaXmlList, entryFilename, ...options }: PanoramaManifestPluginOptions) {
     this.entries = entries;
-    this.xmlList = xmlList;
+    this.xmlList = dotaXmlList;
     this.entryFilename = entryFilename ?? '[path][name].[ext]';
     this.htmlWebpackPlugin = new HtmlWebpackPlugin({
       filename: 'custom_ui_manifest.xml',
