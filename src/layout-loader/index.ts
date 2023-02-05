@@ -1,6 +1,7 @@
 import posthtml from 'posthtml';
 import { imports, urls } from '@posthtml/esm';
 import webpack from 'webpack';
+import path from 'path';
 import { LoaderContext } from '../webpack-loader-api';
 import { banTextNodes } from './posthtml-plugin-ban-text-nodes';
 import { loadImports } from './posthtml-plugin-load-imports';
