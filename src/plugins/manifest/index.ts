@@ -32,6 +32,14 @@ interface XmlAsset {
 export interface PanoramaManifestPluginOptions extends HtmlWebpackPlugin.Options {
   entries: string | ManifestEntry[];
   dotaXmlList:DotaXmlEntry[]
+  /**
+   * List of script files to be included in the manifest.
+   *
+   * @example
+   * ['file://{resources}/scripts/custom_game/*.js', 
+   * 'file://{resources}/scripts/custom_game/*.js']
+   */
+  scriptImport?:string[]
 
   /**
    * @default '[path][name].[ext]'
@@ -44,12 +52,14 @@ const addEntry = promisify(webpack.Compilation.prototype.addEntry);
 export class PanoramaManifestPlugin {
   private readonly entries: string | ManifestEntry[];
   private readonly xmlList?: DotaXmlEntry[];
+  private readonly scriptImport?: string[];
   private readonly entryFilename: string;
   private readonly htmlWebpackPlugin: HtmlWebpackPlugin;
   private bManifestGenerated = false;
-  constructor({ entries,dotaXmlList, entryFilename, ...options }: PanoramaManifestPluginOptions) {
+  constructor({ entries,dotaXmlList,scriptImport, entryFilename, ...options }: PanoramaManifestPluginOptions) {
     this.entries = entries;
     this.xmlList = dotaXmlList;
+    this.scriptImport = scriptImport;
     this.entryFilename = entryFilename ?? '[path][name].[ext]';
     this.htmlWebpackPlugin = new HtmlWebpackPlugin({
       filename: 'custom_ui_manifest.xml',
@@ -192,6 +202,13 @@ export class PanoramaManifestPlugin {
         });
 
         (args.assets as any).xml = xmlAssets;
+
+        if (this.scriptImport && this.scriptImport.length > 0) 
+        {
+            const jsList = args.assets.js ?? [];
+            jsList.push(...this.scriptImport);
+            args.assets.js = jsList;
+        }
 
         return args;
       });
